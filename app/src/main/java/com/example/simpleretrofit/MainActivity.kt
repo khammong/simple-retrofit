@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simpleretrofit.adapter.MyAdapter
+import com.example.simpleretrofit.model.Post
 import com.example.simpleretrofit.repository.Repository
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,10 +26,13 @@ class MainActivity : AppCompatActivity() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getCustomPosts(2, "id", "desc")
-        viewModel.myCustomPosts.observe(this, Observer { response ->
+        val myPost = Post(2,2,"Lily", "Learning Retrofit")
+        viewModel.pushPost2(2,2,"Lily", "Learning Retrofit")
+        viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful){
-                response.body()?.let { myAdapter.setData(it) }
+               Log.d("Main", response.body().toString())
+                Log.d("Main", response.code().toString())
+                Log.d("Main", response.message())
             }else {
                 Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
             }

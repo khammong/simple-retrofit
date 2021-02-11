@@ -1,5 +1,6 @@
 package com.example.simpleretrofit
 
+import android.icu.text.CaseMap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,6 +37,20 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     fun getCustomPost2(userId: Int, options: Map<String, String>) {
         viewModelScope.launch {
             val response: Response<List<Post>> = repository.getCustomPosts2(userId, options)
+        }
+    }
+
+    fun pushPost(post: Post) {
+        viewModelScope.launch {
+            val response:Response<Post> = repository.pushPost(post)
+            myResponse
+        }
+    }
+
+    fun pushPost2(userId: Int, id: Int, title: String, body: String) {
+        viewModelScope.launch {
+            val response:Response<Post> = repository.pushPost2(userId, id, title, body)
+            myResponse
         }
     }
 }

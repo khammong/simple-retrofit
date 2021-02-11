@@ -2,10 +2,7 @@ package com.example.simpleretrofit.api
 
 import com.example.simpleretrofit.model.Post
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface SimpleApi {
     @GET("posts/1")
@@ -28,4 +25,20 @@ interface SimpleApi {
         @Query("userId") userId: Int,
         @QueryMap options: Map<String, String>
     ): Response<List<Post>>
+
+    // Json
+    @POST("posts")
+    suspend fun pushPost(
+        @Body post: Post
+    ): Response<Post>
+
+    @FormUrlEncoded
+    @POST("posts")
+    suspend fun pushPost2(
+        @Field("userId") userId: Int,
+        @Field("id") id: Int,
+        @Field("title") title: String,
+        @Field("body") body: String
+    ): Response<Post>
+
 }
